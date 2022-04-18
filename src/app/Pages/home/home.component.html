@@ -1,0 +1,25 @@
+<ng-http-loader></ng-http-loader>
+<div>
+    <header>
+        <h1>The<strong>Anime</strong>Database</h1>
+  
+        <form class="search-box" (ngSubmit)="handleSearch()">
+          <input 
+            type="search" 
+            class="search-field" 
+            name="searchQuery"
+            placeholder="Search for an anime..." 
+            required 
+            [(ngModel)] = "searchQuery"
+          />
+        </form>
+    </header>
+    <main>
+        <div class="cards" *ngIf="animeList.length > 0">
+          <app-cards *ngFor="let anime of animeList" [animes] = "anime"></app-cards>
+        </div>
+        <div class="no-results" *ngIf="animeList.length == 0">
+          Sorry, we have no results...
+        </div>
+    </main>
+</div>

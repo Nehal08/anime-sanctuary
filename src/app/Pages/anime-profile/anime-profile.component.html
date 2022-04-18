@@ -1,0 +1,106 @@
+<ng-http-loader></ng-http-loader>
+<div class="anime-page">
+    <app-cards [animes]="anime" style="padding-top:15px"></app-cards> 
+    <div class="summary">
+        <span>
+            <h2 *ngIf="title_english!=null">{{title_english}}, </h2><h2 *ngIf="title_japanese!=null">{{title_japanese}}</h2>
+        </span>
+
+        <div class="row">
+            <div class="col-md-4">
+
+                <div *ngIf="rating!=null">
+                    <h5>Ratings: {{score | number:'0.0-2'}} </h5>
+                    <ngb-rating [(rate)]="score" [readonly]="true" [max]="5">
+                        <ng-template let-fill="fill">
+                        <span class="defaultStar" [class.filled]="fill === 100">
+                            <span class="paintedStar" [style.width.%]="fill">&starf;</span>&starf;
+                        </span>
+                        </ng-template>
+                    </ngb-rating>
+                </div>
+
+                <div *ngIf="rating==null">
+                    <h5>Ratings: Not available</h5>
+                </div>
+
+            </div>
+            <div class="col-md-8">
+                <div class="tags float-end">
+                    <app-genre-tag *ngFor="let genre of genres" [genre] = "genre"></app-genre-tag>
+                </div>
+            </div>
+        </div>
+
+        <p *ngIf="synopsis!=null">{{synopsis}}</p>
+        <p *ngIf="synopsis==null">Synopsis not available</p>
+
+    </div>
+    <div class="break"></div>
+
+    <div class="info">
+        <h3 style="color: #AAA;"><em>Information</em></h3>
+        <span class="base">
+            <h5 *ngIf="type!=null" class="inline"><pre>{{type}} . </pre></h5>
+            <h5 *ngIf="type=='Movie' && duration!=null" class="inline"><pre>{{duration}} . </pre></h5>
+            <h5 *ngIf="year!=null" class="inline"><pre>{{year}} . </pre></h5>
+            <h5 *ngIf="rating!=null" class="inline"><pre>{{rating}}</pre></h5>
+        </span><br>
+        <div class="row" *ngIf="type!='Movie'">
+            <div class="col-md-4">
+                Status: {{status}}
+            </div>
+            <div class="col-md-4">
+                No. of episodes: {{episodes}}
+            </div>
+            <div class="col-md-4">
+                Duration per episode: {{duration}}
+            </div>
+            <div class="col-md-4" *ngIf="demographics.length == 1">
+                Demographic: 
+                <div *ngFor="let demographic of demographics" class="inline">
+                    {{demographic}}
+                </div>
+            </div> 
+            <div class="col-md-6" *ngIf="demographics.length > 1">
+                Demographic: 
+                <div *ngFor="let demographic of demographics" class="inline">
+                    {{demographic}},&nbsp;
+                </div>
+            </div> 
+            <div class="col-md-6" *ngIf="themes.length > 1">
+                Themes:
+                <div *ngFor="let theme of themes" class="inline"> 
+                    {{theme}},&nbsp;
+                </div>
+            </div> 
+            <div class="col-md-4" *ngIf="themes.length == 1">
+                Themes:
+                <div *ngFor="let theme of themes" class="inline"> 
+                    {{theme}}
+                </div>
+            </div> 
+            <div class="col-md-2" *ngIf="rank">
+                Rank: {{rank}}
+            </div>
+            <div class="col-md-4" *ngIf="source">
+                Source: {{source}}
+            </div>
+        </div>
+        <p *ngIf="background">
+            <button type="button" class="btn btn-outline-primary" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
+              aria-controls="collapseExample">
+              Did You Know???
+            </button>
+        </p>
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+            <div class="card">
+                <div class="card-body">
+                    <code>
+                        {{background}}
+                    </code>
+                </div>
+            </div>
+        </div>  
+    </div>
+</div>

@@ -1,0 +1,26 @@
+.toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    
+    background-color: #313131;
+    /* background-color: #1976d2;
+    color: white; */
+    font-weight: 900;
+}
+
+a span{
+    font-family: 'Square Peg', cursive;
+    font-size: 48px;
+    margin-left: 5px;
+    /* color: whitesmoke; */
+    color:#AAA;
+}
+
+a:hover span{
+    color: whitesmoke;
+}
