@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AnimeService } from 'src/app/services/anime.service';
 
 @Component({
@@ -31,14 +31,14 @@ export class AnimeProfileComponent implements OnInit {
   source: any = null;
   background: any = null;
 
-  constructor(private route: ActivatedRoute,private AnimeService: AnimeService) { }
+  constructor(private route: ActivatedRoute,private animeService: AnimeService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params
     });
 
-    this.AnimeService.searchAnimeById(this.id.id).subscribe(data => {
+    this.animeService.searchAnimeById(this.id.id).subscribe(data => {
       let obj:any = data
       this.anime = obj.data
       console.log(this.anime)

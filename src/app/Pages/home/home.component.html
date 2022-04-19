@@ -1,25 +1,131 @@
 <ng-http-loader></ng-http-loader>
 <div>
-    <header>
-        <h1><strong>Anime</strong>Sanctuary</h1>
-  
-        <form class="search-box" (ngSubmit)="handleSearch()">
-          <input 
-            type="search" 
-            class="search-field" 
-            name="searchQuery"
-            placeholder="Search for an anime..." 
-            required 
-            [(ngModel)] = "searchQuery"
-          />
-        </form>
-    </header>
-    <main>
-        <div class="cards" *ngIf="animeList.length > 0">
-          <app-cards *ngFor="let anime of animeList" [animes] = "anime"></app-cards>
+  <header>
+    <h1><strong>Anime</strong>Sanctuary</h1>
+
+    <form class="search-box" [formGroup]="search" (ngSubmit)="handleSearch(search)">
+
+      <input type="search" class="search-field" formControlName="searchQuery" placeholder="Search for an anime..."
+        required />
+
+    </form>
+    <div class="break"></div>
+
+    <form class="filter-box" [formGroup]="filter">
+      <p style="margin:10px;padding: 5px;" [hidden]="filtering">
+        <button type="button" class="btn btn-outline-secondary" (click)="collapse.toggle()"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+          Add Filters
+        </button>
+      </p>
+
+      <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+        <div class="filter">
+
+          <div class="row">
+
+            <div class="col-md-2 col-lg-2">
+              <select class="custom-select" formControlName="order_by">
+                <option value="" class="text-secondary">Order By</option>
+                <option *ngFor="let order of orderBys" [ngValue]="order.value">
+                  {{ order.name }}
+                </option>
+              </select>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="btn-group" role="group" aria-label="status filter">
+
+                <input type="radio" value="upcoming" class="btn-check" id="upcoming"
+                  [checked]="filter.value.status == 'upcoming'" formControlName="status">
+                <label class="btn btn-outline-secondary" for="upcoming">Upcoming</label>
+    
+                <input type="radio" value="airing" class="btn-check" id="airing" autocomplete="off"
+                  [checked]="filter.value.status == 'airing'" formControlName="status">
+                <label class="btn btn-outline-secondary" for="airing">Airing</label>
+    
+                <input type="radio" value="complete" class="btn-check" id="complete" autocomplete="off"
+                  [checked]="filter.value.status == 'complete'" formControlName="status">
+                <label class="btn btn-outline-secondary" for="complete">Complete</label>
+
+              </div>
+            </div>
+
+            <div class="col-md-5 col-lg-4">
+              <div class="btn-group" role="group" aria-label="type filter">
+
+                <input type="radio" value="tv" class="btn-check" id="tv"
+                  [checked]="filter.value.type == 'tv'" formControlName="type">
+                <label class="btn btn-outline-secondary" for="tv">TV</label>
+    
+                <input type="radio" value="movie" class="btn-check" id="movie" autocomplete="off"
+                  [checked]="filter.value.type == 'movie'" formControlName="type">
+                <label class="btn btn-outline-secondary" for="movie">Movie</label>
+    
+                <input type="radio" value="ova" class="btn-check" id="ova" autocomplete="off"
+                  [checked]="filter.value.type == 'ova'" formControlName="type">
+                <label class="btn btn-outline-secondary" for="ova">OVA</label>
+    
+                <input type="radio" value="special" class="btn-check" id="special" autocomplete="off"
+                  [checked]="filter.value.type == 'special'" formControlName="type">
+                <label class="btn btn-outline-secondary" for="special">Special</label>
+    
+                <input type="radio" value="ona" class="btn-check" id="ona" autocomplete="off"
+                  [checked]="filter.value.type == 'ona'" formControlName="type">
+                <label class="btn btn-outline-secondary" for="ona">ONA</label>
+    
+                <input type="radio" value="music" class="btn-check" id="music" autocomplete="off"
+                  [checked]="filter.value.type == 'music'" formControlName="type">
+                <label class="btn btn-outline-secondary" for="music">Music</label>
+    
+              </div>
+            </div>
+
+            <div class="col-md-5 col-lg-3">
+              <div class="btn-group" role="group" aria-label="type filter">
+
+                <input type="radio" value="g" class="btn-check" id="g"
+                  [checked]="filter.value.rating == 'g'" formControlName="rating">
+                <label class="btn btn-outline-secondary" for="g" ngbTooltip="G - All Ages">G</label>
+    
+                <input type="radio" value="pg" class="btn-check" id="pg" autocomplete="off"
+                  [checked]="filter.value.rating == 'pg'" formControlName="rating">
+                <label class="btn btn-outline-secondary" for="pg" ngbTooltip="PG - Children">PG</label>
+    
+                <input type="radio" value="pg13" class="btn-check" id="pg13" autocomplete="off"
+                  [checked]="filter.value.rating == 'pg13'" formControlName="rating">
+                <label class="btn btn-outline-secondary" for="pg13" ngbTooltip="PG-13 - Teens 13 or older">PG-13</label>
+    
+                <input type="radio" value="r17" class="btn-check" id="r17" autocomplete="off"
+                  [checked]="filter.value.rating == 'r17'" formControlName="rating">
+                <label class="btn btn-outline-secondary" for="r17" ngbTooltip="R - 17+ (violence & profanity)">R-17+</label>
+    
+                <input type="radio" value="r" class="btn-check" id="r" autocomplete="off"
+                  [checked]="filter.value.rating == 'r'" formControlName="rating">
+                <label class="btn btn-outline-secondary" for="r" ngbTooltip="R+ - Mild Nudity">R+</label>
+    
+              </div>
+            </div>
+
+            <div  style="margin-left: 5px;margin-top: 3px;display: flex; justify-content: center;">
+              <button class="btn btn-outline-secondary" type="submit" (click)="handleFilter(filter)" style="margin-right: 5px;">Apply filters</button>
+              <button class="btn btn-outline-secondary" type="submit" (click)="removeFilter(filter)">Remove filters</button>
+            </div>
+
+          </div>   
+
         </div>
-        <div class="no-results" *ngIf="animeList.length == 0">
-          Sorry, we have no results...
-        </div>
-    </main>
+      </div>
+
+    </form>
+
+  </header>
+  <main *ngIf="animeList">
+    <div class="cards" *ngIf="animeList.length > 0">
+      <app-cards *ngFor="let anime of animeList" [animes]="anime"></app-cards>
+    </div>
+    <div class="no-results" *ngIf="animeList.length == 0">
+      Sorry, we have no results...
+    </div>
+  </main>
 </div>

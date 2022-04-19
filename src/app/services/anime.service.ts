@@ -20,5 +20,10 @@ export class AnimeService {
     return this.http.get("https://api.jikan.moe/v4/anime?sfw&genres=" + genreid)
   }
 
+  filterAnime(filters: any,query:any){
+    console.log("https://api.jikan.moe/v4/anime?sfw&q=" + query + filters)
+    return this.http.get(`https://api.jikan.moe/v4/anime?sfw&sort=desc&q=` + query + filters)
+  }
+
 }
 

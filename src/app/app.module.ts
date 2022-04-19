@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
-import { NgbCollapseModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgHttpLoaderModule } from 'ng-http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -31,10 +31,10 @@ import { GenrePageComponent } from './Pages/genre-page/genre-page.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
-    NgbRatingModule,
-    NgbCollapseModule,
-    NgHttpLoaderModule.forRoot()
+    NgbModule,
+    NgHttpLoaderModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
