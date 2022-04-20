@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AnimeService } from 'src/app/services/anime.service';
 
 @Component({
@@ -8,7 +9,6 @@ import { AnimeService } from 'src/app/services/anime.service';
   styleUrls: ['./anime-profile.component.css']
 })
 export class AnimeProfileComponent implements OnInit {
-
 
   isCollapsed: boolean = true;
 
@@ -31,7 +31,52 @@ export class AnimeProfileComponent implements OnInit {
   source: any = null;
   background: any = null;
 
-  constructor(private route: ActivatedRoute,private animeService: AnimeService) { }
+
+  characters: any[] = []; 
+  chars: any;
+
+
+  // customOptions: OwlOptions = {
+  //   pullDrag: true, dots: false, slideBy: 'page', rewind: true, nav: true,
+  //   responsive: {
+  //     0: {
+  //       items: 1
+  //     },
+  //     400: {
+  //       items: 2
+  //     },
+  //     740: {
+  //       items: 3
+  //     },
+  //     940: {
+  //       items: 4
+  //     }
+  //   }
+  // }
+
+  customOptions: OwlOptions = {
+    pullDrag: true, dots: false, slideBy: 'page', rewind: true, nav: true,
+    responsive: {
+      0:{
+        items:1,
+        nav:true
+      },
+      600:{
+          items:3,
+          nav:false
+      },
+      1000:{
+          items:5,
+          nav:true,
+          loop:false
+      }
+    }
+  }
+
+
+
+
+  constructor(private route: ActivatedRoute,private animeService: AnimeService) {  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -41,7 +86,7 @@ export class AnimeProfileComponent implements OnInit {
     this.animeService.searchAnimeById(this.id.id).subscribe(data => {
       let obj:any = data
       this.anime = obj.data
-      console.log(this.anime)
+      // console.log(this.anime)
 
       this.status = this.anime.status
       this.episodes = this.anime.episodes
@@ -91,5 +136,20 @@ export class AnimeProfileComponent implements OnInit {
       if(this.anime.themes.length > 0)
         this.anime.themes.forEach((data: {name: any}) => this.themes.push(data.name));
     })
+
+    this.animeService.getAnimeCharacters(this.id.id).subscribe(data => {
+
+      let obj: any = data
+      let allCharacters = obj['data']
+      console.log(allCharacters)
+      allCharacters.forEach((data: { character: { name: any; images: { webp: { image_url: any; }; }; }; role: any; }) => this.characters.push({"name" : data.character.name,"image_url": data.character.images.webp.image_url,"role": data.role}));
+
+      this.chars = this.characters.slice(0,20)
+      
+      console.log(this.chars)
+
+    })
+
   }
+
 }

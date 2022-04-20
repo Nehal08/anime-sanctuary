@@ -21,9 +21,13 @@ export class AnimeService {
   }
 
   filterAnime(filters: any,query:any){
-    console.log("https://api.jikan.moe/v4/anime?sfw&q=" + query + filters)
     return this.http.get(`https://api.jikan.moe/v4/anime?sfw&sort=desc&q=` + query + filters)
   }
+
+  getAnimeCharacters(id: number){
+    return this.http.get(`https://api.jikan.moe/v4/anime/` + id + `/characters`)
+  }
+
 
 }
 
