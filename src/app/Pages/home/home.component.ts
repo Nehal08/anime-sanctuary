@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
     this.query = form.value.searchQuery
 
     this.animeService.searchAnimeByName(form.value.searchQuery).subscribe(data => {
-      console.log(data)
+      // console.log(data)
       let obj:any = data;
       this.animeList = obj.data;
     })  

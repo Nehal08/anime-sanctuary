@@ -141,12 +141,14 @@ export class AnimeProfileComponent implements OnInit {
 
       let obj: any = data
       let allCharacters = obj['data']
-      console.log(allCharacters)
       allCharacters.forEach((data: { character: { name: any; images: { webp: { image_url: any; }; }; }; role: any; }) => this.characters.push({"name" : data.character.name,"image_url": data.character.images.webp.image_url,"role": data.role}));
 
-      this.chars = this.characters.slice(0,20)
+      if(this.characters.length >= 20)
+        this.chars = this.characters.slice(0,20)
+      else
+        this.chars = this.characters
       
-      console.log(this.chars)
+      // console.log(this.chars)
 
     })
 
