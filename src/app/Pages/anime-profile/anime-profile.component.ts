@@ -152,7 +152,6 @@ export class AnimeProfileComponent implements OnInit {
     })
   }
 
-
   getAnimeThemes(){
     this.animeService.getAnimeThemes(this.id).subscribe(data => {
       let obj: any = data
@@ -168,9 +167,9 @@ export class AnimeProfileComponent implements OnInit {
     })
   }
 
-  relatedAnimePage(id: number,type: string){
-    if(type != 'manga')
-      this.router.navigate(['anime', id]).then(anime => { window.location.reload(); });
-  }
+  // relatedAnimePage(id: number,type: string){
+  //   if(type != 'manga')
+  //     this.router.navigate(['anime', id]).then(anime => { window.location.reload(); });
+  // }
 
 }

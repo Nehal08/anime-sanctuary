@@ -173,7 +173,7 @@
                         <div class="col-md-12">
                             <code style="margin-bottom: 7px;">{{relation.relation}}</code>
                             <ul>
-                                <li *ngFor="let e of relation.entry"><code style="font-size: 15px;">{{e.type}} | <a (click)="relatedAnimePage(e.mal_id,e.type)">{{e.name}}</a></code></li>
+                                <li *ngFor="let e of relation.entry"><code style="font-size: 15px;">{{e.type}} | {{e.name}}</code></li>
                             </ul>
                         </div>
                         <div class="col-md-12" *ngIf="relations.length==0">
