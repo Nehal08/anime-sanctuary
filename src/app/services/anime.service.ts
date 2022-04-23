@@ -28,6 +28,13 @@ export class AnimeService {
     return this.http.get(`https://api.jikan.moe/v4/anime/` + id + `/characters`)
   }
 
+  getAnimeThemes(id: number){
+    return this.http.get(`https://api.jikan.moe/v4/anime/` + id + `/themes`)
+  }
+
+  getRelatedAnimed(id: number){
+    return this.http.get(`https://api.jikan.moe/v4/anime/` + id + `/relations`)
+  }
 
 }
 

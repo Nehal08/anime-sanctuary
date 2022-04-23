@@ -1,5 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AnimeService } from 'src/app/services/anime.service';
 
@@ -10,8 +10,12 @@ import { AnimeService } from 'src/app/services/anime.service';
 })
 export class AnimeProfileComponent implements OnInit {
 
-  isCollapsed: boolean = true;
+  //Collapse Variables
+  isCollapsedBackground: boolean = true;
+  isCollapsedThemes: boolean = true;
+  isCollapsedRelated: boolean = true;
 
+  //Animes variables
   anime!: any;
   id!: any;
   score: any = null;
@@ -31,28 +35,9 @@ export class AnimeProfileComponent implements OnInit {
   source: any = null;
   background: any = null;
 
-
+  //Character Variables
   characters: any[] = []; 
   chars: any;
-
-
-  // customOptions: OwlOptions = {
-  //   pullDrag: true, dots: false, slideBy: 'page', rewind: true, nav: true,
-  //   responsive: {
-  //     0: {
-  //       items: 1
-  //     },
-  //     400: {
-  //       items: 2
-  //     },
-  //     740: {
-  //       items: 3
-  //     },
-  //     940: {
-  //       items: 4
-  //     }
-  //   }
-  // }
 
   customOptions: OwlOptions = {
     pullDrag: true, dots: false, slideBy: 'page', rewind: true, nav: true,
@@ -73,24 +58,34 @@ export class AnimeProfileComponent implements OnInit {
     }
   }
 
+  //Themes Variable
+  ost: any = null; 
 
+  //Relations Variable
+  relations: any = null;
 
-
-  constructor(private route: ActivatedRoute,private animeService: AnimeService) {  }
+  constructor(private route: ActivatedRoute,private animeService: AnimeService,private router: Router) {  }
 
   ngOnInit(): void {
+
     this.route.params.subscribe(params => {
-      this.id = params
+      this.id = +params['id'];
+
     });
 
-    this.animeService.searchAnimeById(this.id.id).subscribe(data => {
+    this.getAnimeDetails()
+    this.getCharacterDetails()
+
+  }
+
+  getAnimeDetails(){
+    this.animeService.searchAnimeById(this.id).subscribe(data => {
       let obj:any = data
       this.anime = obj.data
       // console.log(this.anime)
 
       this.status = this.anime.status
       this.episodes = this.anime.episodes
-      this.type = this.anime.type
       this.year = this.anime.year
       this.rank = this.anime.rank
       this.source = this.anime.source
@@ -98,6 +93,9 @@ export class AnimeProfileComponent implements OnInit {
 
       if(this.anime.score != null)
         this.score = this.anime.score/2;
+
+      if(this.anime.type != 'Unknown')
+        this.type = this.anime.type 
       
       if(this.anime.title_english != null)
         this.title_english =  this.anime.title_english
@@ -118,7 +116,7 @@ export class AnimeProfileComponent implements OnInit {
       if(this.anime.genres!= null)
         this.anime.genres.forEach((data: { name: any; mal_id: any}) => this.genres.push({"name" : data.name,"genreid": data.mal_id}));
 
-      if (this.anime.duration != null){
+      if (this.anime.duration != null && this.anime.duration!= 'Unknown'){
         if(this.anime.type === "Movie" )
           this.duration = this.anime.duration
         else{
@@ -135,9 +133,12 @@ export class AnimeProfileComponent implements OnInit {
 
       if(this.anime.themes.length > 0)
         this.anime.themes.forEach((data: {name: any}) => this.themes.push(data.name));
-    })
 
-    this.animeService.getAnimeCharacters(this.id.id).subscribe(data => {
+    })
+  }
+
+  getCharacterDetails(){
+    this.animeService.getAnimeCharacters(this.id).subscribe(data => {
 
       let obj: any = data
       let allCharacters = obj['data']
@@ -148,10 +149,28 @@ export class AnimeProfileComponent implements OnInit {
       else
         this.chars = this.characters
       
-      // console.log(this.chars)
-
     })
+  }
 
+
+  getAnimeThemes(){
+    this.animeService.getAnimeThemes(this.id).subscribe(data => {
+      let obj: any = data
+      this.ost = obj['data']
+    })
+  }
+
+  getAnimeRelations(){
+    this.animeService.getRelatedAnimed(this.id).subscribe(data => {
+      let obj: any = data;
+      this.relations = obj['data']
+      // console.log(this.relations)
+    })
+  }
+
+  relatedAnimePage(id: number,type: string){
+    if(type != 'manga')
+      this.router.navigate(['anime', id]).then(anime => { window.location.reload(); });
   }
 
 }

@@ -27,5 +27,6 @@
 }
 
 .card:hover h4 {
-    color: #24C444;
+    /* color: #24C444; */
+    transform: scale(1.02);
 }

@@ -17,6 +17,7 @@ import { AnimeProfileComponent } from './Pages/anime-profile/anime-profile.compo
 import { PageNotFoundComponent } from './Pages/page-not-found/page-not-found.component';
 import { GenreTagComponent } from './components/genre-tag/genre-tag.component';
 import { GenrePageComponent } from './Pages/genre-page/genre-page.component';
+import { ThemePipe } from './Pipes/theme.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { GenrePageComponent } from './Pages/genre-page/genre-page.component';
     AnimeProfileComponent,
     PageNotFoundComponent,
     GenreTagComponent,
-    GenrePageComponent
+    GenrePageComponent,
+    ThemePipe
   ],
   imports: [
     BrowserModule,

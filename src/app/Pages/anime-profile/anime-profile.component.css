@@ -117,7 +117,7 @@ code{
     padding: 0px 8px;
     margin: 4px;
     border-radius: 5px;
-    cursor: pointer;
+    width: 100%;
 }
 
 /* carousel  */
@@ -138,4 +138,22 @@ owl-carousel-o{
     object-fit: cover;
     border-radius: 16px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Themes */
+.themes{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.li{
+    font-size: 10px;
+}
+
+
+/* Related Animes */
+a{
+    cursor: pointer;
 }
