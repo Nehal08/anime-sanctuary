@@ -18,6 +18,8 @@ import { PageNotFoundComponent } from './Pages/page-not-found/page-not-found.com
 import { GenreTagComponent } from './components/genre-tag/genre-tag.component';
 import { GenrePageComponent } from './Pages/genre-page/genre-page.component';
 import { ThemePipe } from './Pipes/theme.pipe';
+import { RelatedAnimesComponent } from './Pages/related-animes/related-animes.component';
+import { RecommendationsComponent } from './Pages/recommendations/recommendations.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { ThemePipe } from './Pipes/theme.pipe';
     PageNotFoundComponent,
     GenreTagComponent,
     GenrePageComponent,
-    ThemePipe
+    ThemePipe,
+    RelatedAnimesComponent,
+    RecommendationsComponent
   ],
   imports: [
     BrowserModule,

@@ -36,5 +36,9 @@ export class AnimeService {
     return this.http.get(`https://api.jikan.moe/v4/anime/` + id + `/relations`)
   }
 
+  getAnimeRecommendations(id: number){
+    return this.http.get(`https://api.jikan.moe/v4/anime/` + id + `/recommendations`)
+  }
+
 }
 

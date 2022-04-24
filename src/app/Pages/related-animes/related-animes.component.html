@@ -1,0 +1,23 @@
+<div class="related-page">
+    <div *ngFor="let relation of relations" class="info">
+        <h3 style="color: #AAA;"><em>{{relation.relation}}</em></h3>
+        <div class="row">
+            <div class="col-md-12">
+                <ul  *ngIf="relation.entry.length==1"> 
+                    <li *ngFor="let e of relation.entry" >
+                        <span>{{e.type | titlecase}} |  <a (click)="goToAnime(e.mal_id,e.type)">{{e.name}}</a></span>
+                    </li> 
+                </ul>
+                <ul *ngIf="relation.entry.length>1">
+                    <li *ngFor="let e of relation.entry">
+                        <span>{{e.type | titlecase}} | <a (click)="goToAnime(e.mal_id,e.type)">{{e.name}}</a></span>
+                        <hr>
+                    </li> 
+                </ul>
+            </div>
+            <div class="col-md-12" *ngIf="relations.length==0">
+                <code>No details available</code>
+            </div>
+        </div>
+    </div>
+</div>

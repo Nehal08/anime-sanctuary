@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { switchMap } from 'rxjs';
 import { AnimeService } from 'src/app/services/anime.service';
 
 @Component({
@@ -13,7 +14,6 @@ export class AnimeProfileComponent implements OnInit {
   //Collapse Variables
   isCollapsedBackground: boolean = true;
   isCollapsedThemes: boolean = true;
-  isCollapsedRelated: boolean = true;
 
   //Animes variables
   anime!: any;
@@ -61,9 +61,6 @@ export class AnimeProfileComponent implements OnInit {
   //Themes Variable
   ost: any = null; 
 
-  //Relations Variable
-  relations: any = null;
-
   constructor(private route: ActivatedRoute,private animeService: AnimeService,private router: Router) {  }
 
   ngOnInit(): void {
@@ -72,6 +69,8 @@ export class AnimeProfileComponent implements OnInit {
       this.id = +params['id'];
 
     });
+
+    // this.route.params.pipe(switchMap((params) => this.animeService.searchAnimeById(params['id']))).subscribe(data => {})
 
     this.getAnimeDetails()
     this.getCharacterDetails()
@@ -134,6 +133,8 @@ export class AnimeProfileComponent implements OnInit {
       if(this.anime.themes.length > 0)
         this.anime.themes.forEach((data: {name: any}) => this.themes.push(data.name));
 
+    },error => {
+      this.router.navigate(['**'])
     })
   }
 
@@ -142,6 +143,7 @@ export class AnimeProfileComponent implements OnInit {
 
       let obj: any = data
       let allCharacters = obj['data']
+  
       allCharacters.forEach((data: { character: { name: any; images: { webp: { image_url: any; }; }; }; role: any; }) => this.characters.push({"name" : data.character.name,"image_url": data.character.images.webp.image_url,"role": data.role}));
 
       if(this.characters.length >= 20)
@@ -160,16 +162,11 @@ export class AnimeProfileComponent implements OnInit {
   }
 
   getAnimeRelations(){
-    this.animeService.getRelatedAnimed(this.id).subscribe(data => {
-      let obj: any = data;
-      this.relations = obj['data']
-      // console.log(this.relations)
-    })
+    this.router.navigate(['related',this.id])
   }
 
-  // relatedAnimePage(id: number,type: string){
-  //   if(type != 'manga')
-  //     this.router.navigate(['anime', id]).then(anime => { window.location.reload(); });
-  // }
+  getRecommendations(){
+    this.router.navigate(['recommendations',this.id])
+  }
 
 }

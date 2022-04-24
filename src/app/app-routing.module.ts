@@ -4,6 +4,8 @@ import { AnimeProfileComponent } from './Pages/anime-profile/anime-profile.compo
 import { GenrePageComponent } from './Pages/genre-page/genre-page.component';
 import { HomeComponent } from './Pages/home/home.component';
 import { PageNotFoundComponent } from './Pages/page-not-found/page-not-found.component';
+import { RecommendationsComponent } from './Pages/recommendations/recommendations.component';
+import { RelatedAnimesComponent } from './Pages/related-animes/related-animes.component';
 
 const routes: Routes = [
   {
@@ -17,6 +19,14 @@ const routes: Routes = [
   {
     path: 'genre/:genreid',
     component: GenrePageComponent
+  },
+  {
+    path: 'related/:id',
+    component: RelatedAnimesComponent
+  },
+  {
+    path: 'recommendations/:id',
+    component: RecommendationsComponent
   },
   { 
     path: '**', 

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
-import { filter } from 'rxjs';
+import { Router } from '@angular/router';
 import { AnimeService } from 'src/app/services/anime.service';
 
 @Component({
@@ -51,7 +50,7 @@ export class HomeComponent implements OnInit {
   ]
 
 
-  constructor(private animeService: AnimeService) { }
+  constructor(private animeService: AnimeService,private router: Router) { }
 
   ngOnInit(): void {
     this.search = new FormGroup({
@@ -73,9 +72,10 @@ export class HomeComponent implements OnInit {
     this.query = form.value.searchQuery
 
     this.animeService.searchAnimeByName(form.value.searchQuery).subscribe(data => {
-      // console.log(data)
       let obj:any = data;
       this.animeList = obj.data;
+    },error => {
+      this.router.navigate(['**'])
     })  
   }
 

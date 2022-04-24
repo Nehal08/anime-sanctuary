@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AnimeService } from 'src/app/services/anime.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class GenrePageComponent implements OnInit {
   genre!: any;
   animes!: any;
 
-  constructor(private AnimeService: AnimeService,private route: ActivatedRoute) { }
+  constructor(private AnimeService: AnimeService,private route: ActivatedRoute,private router: Router) { }
 
   ngOnInit(): void {
 
@@ -27,6 +27,8 @@ export class GenrePageComponent implements OnInit {
     this.AnimeService.searchAnimeByGenreId(this.genreid).subscribe(data => {
       let obj:any = data
       this.animes = obj.data
+    },error => {
+      this.router.navigate(['**'])
     })
 
   }

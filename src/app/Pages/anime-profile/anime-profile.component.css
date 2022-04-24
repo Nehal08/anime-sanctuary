@@ -157,3 +157,12 @@ owl-carousel-o{
 a{
     cursor: pointer;
 }
+
+/* Recommendations */
+.recomm-image{
+    width: 500px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
