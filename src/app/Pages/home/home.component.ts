@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
 
   query!: any;
   animeList!: any;
+  filters: string = '';
   orderBys = [ 
     {
       value: "title",
@@ -53,8 +54,9 @@ export class HomeComponent implements OnInit {
   constructor(private animeService: AnimeService,private router: Router) { }
 
   ngOnInit(): void {
+
     this.search = new FormGroup({
-      searchQuery: new FormControl()
+      searchQuery: new FormControl(), 
     });
 
     this.filter = new FormGroup({
@@ -64,30 +66,23 @@ export class HomeComponent implements OnInit {
       order_by: new FormControl('') 
     });
 
+    this.filter.valueChanges.subscribe(data => {
+      this.filtering = true
+      this.filters = '&status=' + data.status + '&type=' + data.type + '&rating=' + data.rating + '&order_by=' + data.order_by
 
+      this.animeService.filterAnime(this.filters,this.query).subscribe(data => {
+        let obj:any = data;
+        this.animeList = obj.data;
+      })
+
+    });
   }
 
   handleSearch(form: FormGroup){
 
     this.query = form.value.searchQuery
 
-    this.animeService.searchAnimeByName(form.value.searchQuery).subscribe(data => {
-      let obj:any = data;
-      this.animeList = obj.data;
-    },error => {
-      this.router.navigate(['**'])
-    })  
-  }
-
-  handleFilter(form: FormGroup){
-
-    this.filtering = true
-    let filters = ''
-    if(form.touched){
-      filters = '&status=' + form.value.status + '&type=' + form.value.type + '&rating=' + form.value.rating + '&order_by=' + form.value.order_by
-    }
-
-    this.animeService.filterAnime(filters,this.query).subscribe(data => {
+    this.animeService.filterAnime(this.filters,this.query).subscribe(data => {
       let obj:any = data;
       this.animeList = obj.data;
     })

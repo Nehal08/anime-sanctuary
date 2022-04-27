@@ -34,6 +34,10 @@
 
         <p *ngIf="synopsis!=null">{{synopsis}}</p>
         <p *ngIf="synopsis==null">Synopsis not available</p>
+        <button type="button" class="btn btn-outline-secondary" (click)="watchVideos()" aria-controls="Video button">
+            Watch Trailer
+        </button>
+        <p type="secondary" *ngIf="len == 0">No link available</p>
 
     </div>
     <div class="break"></div>
@@ -57,23 +61,27 @@
                 Duration per episode: {{duration}}
             </div>
             <div class="col-md-4" *ngIf="demographics.length == 1">
+                Demographic:
                 <div *ngFor="let demographic of demographics" class="inline">
-                    Demographic:  {{demographic}}
+                    {{demographic}}
                 </div>
             </div> 
             <div class="col-md-6" *ngIf="demographics.length > 1">
+                Demographic:
                 <div *ngFor="let demographic of demographics" class="inline">
-                    Demographic: {{demographic}},&nbsp;
+                    {{demographic}},&nbsp;
                 </div>
             </div> 
             <div class="col-md-6" *ngIf="themes.length > 1">
+                Themes:
                 <div *ngFor="let theme of themes" class="inline"> 
-                    Themes: {{theme}},&nbsp;
+                    {{theme}},&nbsp;
                 </div>
             </div> 
             <div class="col-md-4" *ngIf="themes.length == 1">
+                Themes:
                 <div *ngFor="let theme of themes" class="inline"> 
-                    Themes: {{theme}}
+                    {{theme}}
                 </div>
             </div> 
             <div class="col-md-2" *ngIf="rank">
@@ -105,8 +113,8 @@
     <div class="break"></div>
     <owl-carousel-o [options]="customOptions"> 
         <ng-container *ngFor="let char of chars"> 
-            <ng-template carouselSlide> 
-                <div ngbTooltip="{{char.role}} character" placement="top" style="margin-top: 40px;">
+            <ng-template carouselSlide style="margin-bottom: 10px;"> 
+                <div ngbTooltip="{{char.role}} character" placement="top" style="margin-top: 40px;" class="container">
                     <div style="margin-left:7px;margin-right:7px">
                         <img src={{char.image_url}} alt={{char.name}} title={{char.name}} class="char-image"> 
                     </div>

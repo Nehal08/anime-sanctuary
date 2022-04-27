@@ -40,5 +40,9 @@ export class AnimeService {
     return this.http.get(`https://api.jikan.moe/v4/anime/` + id + `/recommendations`)
   }
 
+  getAnimeVideos(id: number){
+    return this.http.get(`https://api.jikan.moe/v4/anime/` + id + `/videos`)
+  }
+
 }
 

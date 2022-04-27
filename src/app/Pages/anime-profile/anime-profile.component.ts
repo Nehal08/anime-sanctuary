@@ -61,6 +61,10 @@ export class AnimeProfileComponent implements OnInit {
   //Themes Variable
   ost: any = null; 
 
+  //promo variables
+  link: any = null;
+  len: any = null;
+
   constructor(private route: ActivatedRoute,private animeService: AnimeService,private router: Router) {  }
 
   ngOnInit(): void {
@@ -167,6 +171,19 @@ export class AnimeProfileComponent implements OnInit {
 
   getRecommendations(){
     this.router.navigate(['recommendations',this.id])
+  }
+
+  watchVideos(){
+    this.animeService.getAnimeVideos(this.id).subscribe(data => {
+      let obj: any = data
+      let vids = obj['data']
+      console.log(vids);
+      this.len = Object.keys(vids['promo']).length
+      if(this.len!=0){
+        this.link = vids['promo'][this.len-1]['trailer']['url']
+        window.open(this.link, "_blank");
+      }
+    })
   }
 
 }

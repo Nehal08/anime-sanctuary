@@ -96,10 +96,9 @@ header .filter-box{
     border: 1px solid #696969;
 }
 
-.custom-select::after {
-    background-color: transparent;
-    border: 1px solid #696969;
-}
+.custom-select:focus {
+    outline:none;
+ }
 
 main {
 	max-width: 1200px;

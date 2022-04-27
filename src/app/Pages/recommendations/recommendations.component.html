@@ -3,4 +3,7 @@
     <div class="cards">
         <app-cards *ngFor="let anime of recommendations" [animes] = "anime"></app-cards>
     </div>
+    <div *ngIf="recommendations.length == 0">
+        <h2>No recommendations available</h2>
+    </div>
 </div>
