@@ -95,6 +95,13 @@ export class HomeComponent implements OnInit {
     form.value.type = ''
     form.value.rating = ''
     form.value.order_by = ''
+
+    this.filters = ''
+    this.animeService.filterAnime(this.filters,this.query).subscribe(data => {
+      let obj:any = data;
+      this.animeList = obj.data;
+    })
+
   }
 
 }
