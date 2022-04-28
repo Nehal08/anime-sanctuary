@@ -20,6 +20,8 @@ import { GenrePageComponent } from './Pages/genre-page/genre-page.component';
 import { ThemePipe } from './Pipes/theme.pipe';
 import { RelatedAnimesComponent } from './Pages/related-animes/related-animes.component';
 import { RecommendationsComponent } from './Pages/recommendations/recommendations.component';
+import { EpisodesComponent } from './Pages/episodes/episodes.component';
+import { BoolToYesPipe } from './Pipes/bool-to-yes.pipe'; 
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { RecommendationsComponent } from './Pages/recommendations/recommendation
     GenrePageComponent,
     ThemePipe,
     RelatedAnimesComponent,
-    RecommendationsComponent
+    RecommendationsComponent,
+    EpisodesComponent,
+    BoolToYesPipe
   ],
   imports: [
     BrowserModule,

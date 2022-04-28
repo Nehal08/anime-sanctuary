@@ -8,8 +8,8 @@ export class AnimeService {
 
   constructor(private http: HttpClient) { }
 
-  searchAnimeByName(name: string){
-    return this.http.get(`https://api.jikan.moe/v4/anime?sfw&q=` + name)
+  searchAnimeByName(filters: any,query:any){
+    return this.http.get(`https://api.jikan.moe/v4/anime?sfw&sort=desc&q=` + query + filters)
   }
 
   searchAnimeById(id: number){
@@ -18,10 +18,6 @@ export class AnimeService {
 
   searchAnimeByGenreId(genreid: number){
     return this.http.get("https://api.jikan.moe/v4/anime?sfw&genres=" + genreid)
-  }
-
-  filterAnime(filters: any,query:any){
-    return this.http.get(`https://api.jikan.moe/v4/anime?sfw&sort=desc&q=` + query + filters)
   }
 
   getAnimeCharacters(id: number){
@@ -40,8 +36,12 @@ export class AnimeService {
     return this.http.get(`https://api.jikan.moe/v4/anime/` + id + `/recommendations`)
   }
 
-  getAnimeVideos(id: number){
+  getAnimeTrailer(id: number){
     return this.http.get(`https://api.jikan.moe/v4/anime/` + id + `/videos`)
+  }
+
+  getAnimeEpisodes(id: number){
+    return this.http.get(`https://api.jikan.moe/v4/anime/` + id + `/episodes`)
   }
 
 }

@@ -38,6 +38,9 @@
             Watch Trailer
         </button>
         <p type="secondary" *ngIf="len == 0">No link available</p>
+        <button type="button" class="btn btn-outline-secondary" (click)="goToEpisodes()" aria-controls="Episodes button" style="margin-left: 10px;">
+            Episodes
+        </button>
 
     </div>
     <div class="break"></div>
@@ -114,12 +117,12 @@
     <owl-carousel-o [options]="customOptions"> 
         <ng-container *ngFor="let char of chars"> 
             <ng-template carouselSlide style="margin-bottom: 10px;"> 
-                <div ngbTooltip="{{char.role}} character" placement="top" style="margin-top: 40px;" class="container">
+                <div class="container">
                     <div style="margin-left:7px;margin-right:7px">
                         <img src={{char.image_url}} alt={{char.name}} title={{char.name}} class="char-image"> 
                     </div>
                     <div class="char-name">
-                        <code style="color: black;">{{char.name}}</code>  
+                        <code style="color: black;">{{char.name}}<br><span style="font-size: 10px;">({{char.role}} character)</span></code>  
                     </div>
                 </div>
             </ng-template> 
@@ -175,8 +178,6 @@
         </p>
 
     </div>
-
-    <div style="margin-bottom: 25px;"></div>
 
 </div>
 

@@ -70,7 +70,7 @@ export class HomeComponent implements OnInit {
       this.filtering = true
       this.filters = '&status=' + data.status + '&type=' + data.type + '&rating=' + data.rating + '&order_by=' + data.order_by
 
-      this.animeService.filterAnime(this.filters,this.query).subscribe(data => {
+      this.animeService.searchAnimeByName(this.filters,this.query).subscribe(data => {
         let obj:any = data;
         this.animeList = obj.data;
       })
@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit {
 
     this.query = form.value.searchQuery
 
-    this.animeService.filterAnime(this.filters,this.query).subscribe(data => {
+    this.animeService.searchAnimeByName(this.filters,this.query).subscribe(data => {
       let obj:any = data;
       this.animeList = obj.data;
     })
@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit {
     form.value.order_by = ''
 
     this.filters = ''
-    this.animeService.filterAnime(this.filters,this.query).subscribe(data => {
+    this.animeService.searchAnimeByName(this.filters,this.query).subscribe(data => {
       let obj:any = data;
       this.animeList = obj.data;
     })

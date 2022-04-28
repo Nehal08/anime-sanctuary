@@ -6,6 +6,7 @@
     flex-wrap: wrap;
     justify-content: center;
     padding-top: 100px;
+    font-family: 'Oswald', sans-serif;
 }
 
 .anime-page .summary{
@@ -149,6 +150,7 @@ owl-carousel-o{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    padding-bottom: 25px;
 }
 
 .li{

@@ -174,7 +174,7 @@ export class AnimeProfileComponent implements OnInit {
   }
 
   watchVideos(){
-    this.animeService.getAnimeVideos(this.id).subscribe(data => {
+    this.animeService.getAnimeTrailer(this.id).subscribe(data => {
       let obj: any = data
       let vids = obj['data']
       console.log(vids);
@@ -184,6 +184,10 @@ export class AnimeProfileComponent implements OnInit {
         window.open(this.link, "_blank");
       }
     })
+  }
+
+  goToEpisodes(){
+    this.router.navigate(['episodes',{id: this.id}])
   }
 
 }

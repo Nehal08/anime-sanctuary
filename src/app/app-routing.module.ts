@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AnimeProfileComponent } from './Pages/anime-profile/anime-profile.component';
+import { EpisodesComponent } from './Pages/episodes/episodes.component';
 import { GenrePageComponent } from './Pages/genre-page/genre-page.component';
 import { HomeComponent } from './Pages/home/home.component';
 import { PageNotFoundComponent } from './Pages/page-not-found/page-not-found.component';
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'recommendations/:id',
     component: RecommendationsComponent
+  },
+  {
+    path: 'episodes',
+    component: EpisodesComponent
   },
   { 
     path: '**', 
