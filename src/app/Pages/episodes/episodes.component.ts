@@ -23,7 +23,6 @@ export class EpisodesComponent implements OnInit {
     this.animeService.getAnimeEpisodes(this.id).subscribe(data => {
       let obj: any = data
       this.episodes = obj.data
-      console.log(this.episodes)
       let len = this.episodes.length     
       this.up = new Array(len).fill(true);
     })
