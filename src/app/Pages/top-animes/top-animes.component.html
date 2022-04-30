@@ -1,0 +1,53 @@
+<div class="top-page">
+    <h2>Top Animes</h2>
+    <div class="break"></div>
+    <div *ngFor="let anime of animes" class="info">
+        <div class="row">
+            <div class="col-md-4" class="wrapper"> 
+                <a (click)="navigate(anime.mal_id)"> 
+                    <img src={{anime.image}} alt={{anime.title}} />
+                    <h4>{{anime.title}}</h4>
+                </a>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <h3 style="color: #AAA;"><em>Information</em></h3>
+                    <span class="base">
+                        <h5 *ngIf="anime.type!=null" class="inline"><pre>{{anime.type}} . </pre></h5>
+                        <h5 *ngIf="anime.type=='Movie' && anime.duration!=null" class="inline"><pre>{{anime.duration}} . </pre></h5>
+                        <h5 *ngIf="anime.year!=null" class="inline"><pre>{{anime.year}} . </pre></h5>
+                        <h5 *ngIf="anime.rating!=null" class="inline"><pre>{{anime.rating}}</pre></h5>
+                    </span><br>
+                </div>
+                <div class="row" *ngIf="anime.type!='Movie'">
+                    <div class="col-md-4" *ngIf="anime.rank">
+                        Rank: {{anime.rank}}
+                    </div>
+                    <div class="col-md-4">
+                        Status: {{anime.status}}
+                    </div>
+                    <div class="col-md-4">
+                        No. of episodes: {{anime.episodes}}
+                    </div>
+                </div>
+                <hr>
+                <div class="row synop">
+                    <span *ngIf="!anime.synopsis.showMore"> <pre>{{trimString(anime.synopsis.synop,450)}}</pre></span>
+                    <span  *ngIf="anime.synopsis.showMore">	 <pre>{{anime.synopsis.synop}}</pre> </span>
+                    <div *ngIf="anime.synopsis.synop.length> 450" (click)="anime.synopsis.showMore = !anime.synopsis.showMore">
+                        Show <span>{{anime.synopsis.showMore ? 'less' : 'More'}}</span>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 5px;">
+                    <div class="col-md-2">
+                        <button class="btn btn-outline-secondary" (click)="watchTrailer(anime.trailer)">Trailer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="animes.length == 0">
+        <h2>No data available</h2>
+    </div>
+</div>
+

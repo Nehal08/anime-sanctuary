@@ -7,6 +7,7 @@ import { HomeComponent } from './Pages/home/home.component';
 import { PageNotFoundComponent } from './Pages/page-not-found/page-not-found.component';
 import { RecommendationsComponent } from './Pages/recommendations/recommendations.component';
 import { RelatedAnimesComponent } from './Pages/related-animes/related-animes.component';
+import { TopAnimesComponent } from './Pages/top-animes/top-animes.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'episodes',
     component: EpisodesComponent
+  },
+  {
+    path: 'topAnimes',
+    component: TopAnimesComponent
   },
   { 
     path: '**', 

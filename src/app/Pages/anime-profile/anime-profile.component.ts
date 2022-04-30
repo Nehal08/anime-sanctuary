@@ -177,7 +177,6 @@ export class AnimeProfileComponent implements OnInit {
     this.animeService.getAnimeTrailer(this.id).subscribe(data => {
       let obj: any = data
       let vids = obj['data']
-      console.log(vids);
       this.len = Object.keys(vids['promo']).length
       if(this.len!=0){
         this.link = vids['promo'][this.len-1]['trailer']['url']

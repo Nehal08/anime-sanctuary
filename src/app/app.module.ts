@@ -21,7 +21,8 @@ import { ThemePipe } from './Pipes/theme.pipe';
 import { RelatedAnimesComponent } from './Pages/related-animes/related-animes.component';
 import { RecommendationsComponent } from './Pages/recommendations/recommendations.component';
 import { EpisodesComponent } from './Pages/episodes/episodes.component';
-import { BoolToYesPipe } from './Pipes/bool-to-yes.pipe'; 
+import { BoolToYesPipe } from './Pipes/bool-to-yes.pipe';
+import { TopAnimesComponent } from './Pages/top-animes/top-animes.component'; 
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { BoolToYesPipe } from './Pipes/bool-to-yes.pipe';
     RelatedAnimesComponent,
     RecommendationsComponent,
     EpisodesComponent,
-    BoolToYesPipe
+    BoolToYesPipe,
+    TopAnimesComponent
   ],
   imports: [
     BrowserModule,
