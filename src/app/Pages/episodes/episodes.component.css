@@ -38,3 +38,14 @@ li{
     font-family: 'Space Mono', monospace;
     font-size: 15px;
 }
+
+.base{
+    margin: 0px;
+    padding: 0px;
+    justify-content:left;
+   
+}
+
+.inline{
+    display: inline-block;
+}

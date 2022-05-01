@@ -1,15 +1,29 @@
 <div class="episodes-page">
     <div *ngFor="let episode of episodes;let i=index" class="info">
-            <p style="margin-bottom:0px;margin-top:5px;" (click)="collapse.toggle()" [attr.aria-expanded]="up[i]" aria-controls="episode">
-                <span style="color: #AAA;">Ep{{episode.mal_id}}:</span>&nbsp;<em>{{episode.title}}</em>
-            </p>
-            <div #collapse="ngbCollapse" [(ngbCollapse)]="up[i]" style="margin-left: 5px;margin-right: 5px;">
-                <span style="font-family: 'Space Mono', monospace; font-size: 15px;">{{episode.title_japanese}}</span>
-                <ul>
-                    <li>Aired:  {{episode.aired | date:'mediumDate' }}</li>
-                    <li>Filler: {{episode.filler | boolToYes}}</li>
-                    <li>Recap:  {{episode.recap | boolToYes}}</li>  
-                </ul>
-            </div>
+        <p style="margin-bottom:0px;margin-top:5px;" (click)="open(content,episode.mal_id)" [attr.aria-expanded]="up[i]" aria-controls="episode">
+          <span style="color: #AAA;">Ep{{episode.mal_id}}:</span>&nbsp;<em>{{episode.title}}</em>
+        </p>
     </div>
 </div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" *ngIf="episode.title">{{episode.title}},&nbsp;</h4>
+      <h4 class="modal-title" *ngIf="episode.title_japanese">{{episode.title_japanese}}</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <span class="base">
+        <h5 *ngIf="episode.filler==true" class="inline"><pre>Filler . </pre></h5>
+        <h5 *ngIf="episode.recap==true" class="inline"><pre>Recap . </pre></h5>
+        <h5 *ngIf="episode.aired!=null" class="inline"><pre>Aired: {{episode.aired | date:'mediumDate' }}</pre></h5>
+    </span><br>
+    <div *ngIf="episode.synopsis">
+      {{episode.synopsis }}
+    </div>
+    <div *ngIf="!episode.synopsis">
+      Synopsis not available
+    </div>
+    </div>
+</ng-template>
+
