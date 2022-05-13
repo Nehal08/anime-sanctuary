@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AnimeService } from 'src/app/services/anime.service';
 
@@ -9,16 +10,46 @@ import { AnimeService } from 'src/app/services/anime.service';
 })
 export class TopAnimesComponent implements OnInit {
 
+  filters!: FormGroup;
   animes: any[] = [];
+  queries = '';
+  filtering: boolean = false;
 
   constructor(private animeService: AnimeService, private router: Router) { }
 
   ngOnInit(): void {
-    this.animeService.getTopAnimes().subscribe(data => {
-      let obj: any = data;
-      let temp = obj.data
 
-      temp.forEach((el: { images: { webp: { image_url: any; }; }; mal_id: any; title: any; status: any; rank: any; trailer: { url: any; }; type: any; year: any; rating: any; episodes: any; synopsis: string; }) => { 
+    this.animeService.getTopAnimes(this.queries).subscribe({
+      next: (obj) => this.handleData(obj),
+      error: (er) =>  this.router.navigate(['**'])
+    })
+
+    this.filters = new FormGroup({
+      type: new FormControl(''),
+      filter: new FormControl('')
+    });
+
+    this.filters.valueChanges.subscribe(data => {
+
+      this.filtering = true
+      this.queries = 'type=' + data.type + '&filter=' + data.filter 
+
+      this.animeService.getTopAnimes(this.queries).subscribe({
+        next: (obj) => this.handleData(obj),
+        error: (er) =>  this.router.navigate(['**'])
+      })
+
+    })
+
+  }
+
+  handleData(obj: any){
+
+    let temp = obj.data
+
+    this.animes = []
+
+    temp.forEach((el: { images: { webp: { image_url: any; }; }; mal_id: any; title: any; status: any; rank: any; trailer: { url: any; }; type: any; year: any; rating: any; episodes: any; synopsis: string; }) => { 
         this.animes.push({
           "image": el.images.webp.image_url,
           "mal_id": el.mal_id, 
@@ -31,12 +62,17 @@ export class TopAnimesComponent implements OnInit {
           "rating": el.rating,
           "episodes": el.episodes,
           "synopsis": {
-            "synop":  el.synopsis.split('[')[0],
+            "synop":  this.synopHandling(el.synopsis),
             "showMore": false
           }
-         }) 
-      });
-    })
+        }) 
+    });
+  }
+
+  synopHandling(synop: string){
+    if(synop == null)
+      return null
+    return synop.split('[')[0]
   }
 
   trimString(text: string, length: number) {
@@ -49,6 +85,18 @@ export class TopAnimesComponent implements OnInit {
 
   watchTrailer(link: any){
     window.open(link, "_blank");
+  }
+
+  removeFilter(){
+
+    this.filtering = false;
+    this.filters.reset()
+    this.queries = ''
+    this.animeService.getTopAnimes(this.queries).subscribe({
+      next: (obj) => this.handleData(obj),
+      error: (er) =>  this.router.navigate(['**'])
+    })
+
   }
 
 }

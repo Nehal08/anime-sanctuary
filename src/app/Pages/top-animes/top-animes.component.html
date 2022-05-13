@@ -1,9 +1,72 @@
 <div class="top-page">
     <h2>Top Animes</h2>
     <div class="break"></div>
+
+    <form class="filter-box" [formGroup]="filters">
+
+        <div class="filter">
+
+            <div class="row">
+                <div class="col-md-5 col-lg-5" style="padding-top: 5px;">
+                    <div class="btn-group" role="group" aria-label="status filter">
+
+                        <input type="radio" value="upcoming" class="btn-check" id="upcoming"
+                            [checked]="filters.value.filter == 'upcoming'" formControlName="filter">
+                        <label class="btn btn-outline-secondary" for="upcoming">Upcoming</label>
+            
+                        <input type="radio" value="airing" class="btn-check" id="airing" autocomplete="off"
+                            [checked]="filters.value.filter == 'airing'" formControlName="filter">
+                        <label class="btn btn-outline-secondary" for="airing">Airing</label>
+            
+                        <input type="radio" value="bypopularity" class="btn-check" id="bypopularity" autocomplete="off"
+                            [checked]="filters.value.filter == 'bypopularity'" formControlName="filter">
+                        <label class="btn btn-outline-secondary" for="bypopularity">Popularity</label>
+
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-6" style="padding-top: 5px;">
+                    <div class="btn-group" role="group" aria-label="type filter">
+
+                        <input type="radio" value="tv" class="btn-check" id="tv"
+                            [checked]="filters.value.type == 'tv'" formControlName="type">
+                        <label class="btn btn-outline-secondary" for="tv">TV</label>
+            
+                        <input type="radio" value="movie" class="btn-check" id="movie" autocomplete="off"
+                            [checked]="filters.value.type == 'movie'" formControlName="type">
+                        <label class="btn btn-outline-secondary" for="movie">Movie</label>
+            
+                        <input type="radio" value="ova" class="btn-check" id="ova" autocomplete="off"
+                            [checked]="filters.value.type == 'ova'" formControlName="type">
+                        <label class="btn btn-outline-secondary" for="ova">OVA</label>
+            
+                        <input type="radio" value="special" class="btn-check" id="special" autocomplete="off"
+                            [checked]="filters.value.type == 'special'" formControlName="type">
+                        <label class="btn btn-outline-secondary" for="special">Special</label>
+            
+                        <input type="radio" value="ona" class="btn-check" id="ona" autocomplete="off"
+                            [checked]="filters.value.type == 'ona'" formControlName="type">
+                        <label class="btn btn-outline-secondary" for="ona">ONA</label>
+            
+                        <input type="radio" value="music" class="btn-check" id="music" autocomplete="off"
+                            [checked]="filters.value.type == 'music'" formControlName="type">
+                        <label class="btn btn-outline-secondary" for="music">Music</label>
+        
+                    </div>
+                </div>
+                <div class="col-md-1 col-lg-1" style="padding-top: 5px;" *ngIf="filtering==true">
+                    <button class="btn btn-outline-secondary" type="submit" (click)="removeFilter()">Reset</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    <div class="break"></div>
+
     <div *ngFor="let anime of animes" class="info">
         <div class="row">
-            <div class="col-md-4" class="wrapper"> 
+            <div class="col-md-4 wrapper"> 
                 <a (click)="navigate(anime.mal_id)"> 
                     <img src={{anime.image}} alt={{anime.title}} />
                     <h4>{{anime.title}}</h4>
@@ -31,11 +94,11 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row synop">
+                <div class="row synop" *ngIf="anime.synopsis.synop!= null">
                     <span *ngIf="!anime.synopsis.showMore"> <pre>{{trimString(anime.synopsis.synop,450)}}</pre></span>
                     <span  *ngIf="anime.synopsis.showMore">	 <pre>{{anime.synopsis.synop}}</pre> </span>
                     <div *ngIf="anime.synopsis.synop.length> 450" (click)="anime.synopsis.showMore = !anime.synopsis.showMore">
-                        Show <span>{{anime.synopsis.showMore ? 'less' : 'More'}}</span>
+                        <span style="cursor:pointer">Show {{anime.synopsis.showMore ? 'less' : 'More'}}</span>
                     </div>
                 </div>
                 <div class="row" style="margin-top: 5px;">

@@ -88,15 +88,20 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  removeFilter(form: FormGroup){
+  removeFilter(){
     this.isCollapsed = true;
-    this.filtering = false;
-    form.value.status = ''
-    form.value.type = ''
-    form.value.rating = ''
-    form.value.order_by = ''
+    this.search.reset()
+    this.filter.setValue({
+      'status': '',
+      'type': '',
+      'rating': '',
+      'order_by':''
+    })
+    
 
     this.filters = ''
+    this.filtering = false;
+
     this.animeService.searchAnimeByName(this.filters,this.query).subscribe(data => {
       let obj:any = data;
       this.animeList = obj.data;

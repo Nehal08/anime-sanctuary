@@ -48,8 +48,8 @@ export class AnimeService {
     return this.http.get(`https://api.jikan.moe/v4/anime/` + animeId + `/episodes/` + episodeId)
   }
 
-  getTopAnimes(){
-    return this.http.get(`https://api.jikan.moe/v4/top/anime`)
+  getTopAnimes(queries: any){
+    return this.http.get(`https://api.jikan.moe/v4/top/anime?` + queries)
   }
 
 }

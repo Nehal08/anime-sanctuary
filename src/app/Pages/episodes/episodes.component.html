@@ -4,6 +4,9 @@
           <span style="color: #AAA;">Ep{{episode.mal_id}}:</span>&nbsp;<em>{{episode.title}}</em>
         </p>
     </div>
+    <div *ngIf="episodes.length == 0" class="info">
+      No Information available
+  </div>
 </div>
 
 <ng-template #content let-modal>
